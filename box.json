@@ -1,0 +1,26 @@
+{
+    "output": "captainhook-bin-plugin.phar",
+    "force-autodiscovery": true,
+    "exclude-dev-files": false,
+    "directories": [
+        "src",
+        "vendor"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": [
+                "docs",
+                "examples",
+                "resources",
+                "tests"
+            ],
+            "in": "."
+        }
+    ],
+    "blacklist": [
+        "vendor/bamarni/composer-bin-plugin/"
+    ],
+    "compression": "GZ",
+    "dump-autoload": false
+}

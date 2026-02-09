@@ -1,0 +1,9 @@
+# THIS FILE CANNOT BE SYNCED
+# use glob patterns as in .gitignore
+# recommend listing non-basics tutorial directories here
+
+# Files you may want to exclude once you start using your template
+.github/workflows/
+docs/
+mkdocs.yml
+README.md

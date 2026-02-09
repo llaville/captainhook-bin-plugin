@@ -1,0 +1,26 @@
+{
+    "config": {
+        "allow-failure": false,
+        "bootstrap": "examples/vendor-bin-autoloader.php",
+        "ansi-colors": true,
+        "git-directory": ".git",
+        "fail-on-first-error": false,
+        "verbosity": "normal",
+        "includes": [
+            "examples/pre-push.mago.json"
+        ],
+        "plugins": [
+            {
+                "plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin",
+                "options": {
+                    "config-directory": "{$ENV|value-of:XDG_CONFIG_HOME|default:~/.config}",
+                    "binary-directory": "{$ENV|value-of:VENDOR_BIN_DIR|default:vendor/bin}",
+                    "ansi-colors-flag": "--ansi",
+                    "auto-colors-flag": "--colors=auto",
+                    "always-colors-flag": "--colors=always",
+                    "never-colors-flag": "--colors=never"
+                }
+            }
+        ]
+    }
+}

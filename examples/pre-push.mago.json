@@ -1,0 +1,27 @@
+{
+    "pre-push": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": [
+                    "XDG_CONFIG_HOME={$ENV|value-of:XDG_CONFIG_HOME|default:.github/linters}",
+                    "MAGO_LOG={$ENV|value-of:MAGO_LOG|default:info}",
+                    "FORCE_COLOR={$ENV|value-of:FORCE_COLOR|default:0}",
+                    "{$ENV|value-of:XDG_BIN_HOME}mago",
+                    "{$CONFIG|value-of:plugin>>\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.auto-colors-flag}",
+                    "lint"
+                ],
+                "config": {
+                    "label": "Static Analysis (with Mago)"
+                },
+                "options": {
+                    "config-file": "mago.toml",
+                    "package-require": [
+                        "carthage-software/mago",
+                        "^1"
+                    ]
+                }
+            }
+        ]
+    }
+}

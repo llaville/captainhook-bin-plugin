@@ -1,0 +1,36 @@
+{
+    "config": {
+        "allow-failure": false,
+        "bootstrap": "examples/vendor-bin-autoloader.php",
+        "ansi-colors": true,
+        "git-directory": ".git",
+        "fail-on-first-error": false,
+        "verbosity": "normal",
+        "plugins": [
+            {
+                "plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin",
+                "options": {
+                    "auto-colors-flag": "--colors=auto",
+                    "always-colors-flag": "--colors=always",
+                    "never-colors-flag": "--colors=never"
+                }
+            }
+        ]
+    },
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "vendor/bin/mago {$CONFIG|value-of:plugin>>\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.always-colors-flag} lint",
+                "config": {
+                    "label": "Lint Files (with Mago)"
+                },
+                "options": {
+                    "package-require": [
+                        "carthage-software/mago"
+                    ]
+                }
+            }
+        ]
+    }
+}

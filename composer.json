@@ -1,0 +1,47 @@
+{
+    "name": "bartlett/captainhook-bin-plugin",
+    "description": "Captain Hook Plugin to execute any binary dependencies if (and only if) packages are installed",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Laurent Laville"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/llaville/captainhook-bin-plugin/issues",
+        "source": "https://github.com/llaville/captainhook-bin-plugin"
+    },
+    "require": {
+        "php": "^8.0",
+        "composer-runtime-api": "^2.0",
+        "captainhook/captainhook": "^5.28.4",
+        "composer/semver": "^3.0"
+    },
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.8"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Bartlett\\CaptainHookBinPlugin\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        },
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false,
+            "target-directory": "vendor-bin"
+        }
+    },
+    "scripts": {
+        "bin": "echo 'bin not installed'"
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "output": "captainhook-bin-plugin.phar",
+    "force-autodiscovery": true,
+    "exclude-dev-files": false,
+    "directories": [
+        "src",
+        "vendor"
+    ],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": [
+                "docs",
+                "examples",
+                "resources",
+                "tests"
+            ],
+            "in": "."
+        }
+    ],
+    "blacklist": [
+        "vendor/bamarni/composer-bin-plugin/"
+    ],
+    "compression": "GZ",
+    "dump-autoload": false,
+    "files-bin": [
+        "console-table.txt",
+        "plain.txt",
+        "sbom.json",
+        ".box.manifests.bin"
+    ],
+    "map": [
+        {
+            "console-table.txt": ".box.manifests/console-table.txt"
+        },
+        {
+            "plain.txt": ".box.manifests/plain.txt"
+        },
+        {
+            "sbom.json": ".box.manifests/sbom.json"
+        }
+    ],
+    "stub": "stub.php"
+}

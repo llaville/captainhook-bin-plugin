@@ -1,0 +1,52 @@
+---
+site_name: CaptainHookBinPlugin
+site_url: https://llaville.github.io/captainhook-bin-plugin/1.x
+repo_url: https://github.com/llaville/captainhook-bin-plugin # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#repository
+site_author: Laurent Laville
+edit_uri: "" # hide edit button -- https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#edit-button
+theme:
+    name: material
+    palette: # Color palette toggle -- https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#color-palette-toggle
+        # editorconfig-checker-disable
+        - scheme: default
+          primary: cyan
+          toggle:
+              icon: material/lightbulb-outline
+              name: Switch to dark mode
+        - scheme: slate
+          toggle:
+              icon: material/lightbulb
+              name: Switch to light mode
+        # editorconfig-checker-enable
+    features:
+        - navigation.instant # Instant loading -- https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#instant-loading
+        - navigation.tabs # Navigation tabs -- https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#navigation-tabs
+        - navigation.indexes # Section index pages -- https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#section-index-pages
+        - navigation.top # Back-To-Top button -- https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/#back-to-top-button
+        - navigation.footer # Setting up the footer -- https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/
+        - content.code.copy # Code copy button -- https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-copy-button
+        - content.code.annotate # Code blocks, Adding annotations -- https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#adding-annotations
+markdown_extensions:
+    - attr_list
+    - md_in_html # https://squidfunk.github.io/mkdocs-material/reference/grids/
+    - tables # https://squidfunk.github.io/mkdocs-material/reference/data-tables/
+    - footnotes # https://squidfunk.github.io/mkdocs-material/reference/footnotes/
+    - pymdownx.highlight: # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/#highlight
+          anchor_linenums: true
+          line_spans: __span
+          pygments_lang_class: true
+    - pymdownx.snippets
+    - pymdownx.tabbed: # https://squidfunk.github.io/mkdocs-material/reference/content-tabs/#content-tabs
+          alternate_style: true
+    - pymdownx.superfences: # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/#superfences
+          custom_fences:
+              - name: mermaid
+                class: mermaid
+                format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.emoji: # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/#emoji
+          emoji_index: !!python/name:material.extensions.emoji.twemoji
+          emoji_generator: !!python/name:material.extensions.emoji.to_svg
+    - github-callouts
+nav:
+    - "Home": README.md
+    - "Learn": learn/README.md
