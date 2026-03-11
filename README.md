@@ -173,13 +173,13 @@ That prints something like
 
 Configuration for `bartlett/captainhook-bin-plugin` consists of the following properties:
 
-| Property           | Description                                                                                         |
-|--------------------|-----------------------------------------------------------------------------------------------------|
-| `package-require`  | The package name (Composer Identifier) and optionally a version constraint (Composer Semver syntax) |
-| `config-directory` | The Configuration directory where to find your binary dependency config file                        |
-| `config-file`      | Your binary dependency configuration filename                                                       |
-| `binary-directory` | Your binary dependency lookup directory (see https://getcomposer.org/doc/06-config.md#bin-dir)      |
-
+| Property             | Description                                                                                          |
+|----------------------|------------------------------------------------------------------------------------------------------|
+| `package-require`    | The package name (Composer Identifier) and optionally a version constraint (Composer Semver syntax)  |
+| `config-directory`   | The Configuration directory where to find your binary dependency config file                         |
+| `config-file`        | Your binary dependency configuration filename                                                        |
+| `binary-directory`   | Your binary dependency lookup directory (see https://getcomposer.org/doc/06-config.md#bin-dir)       |
+| `dependency-manager` | Your dependency manager : `Composer` (default), `Phive` (alternative) ... or your own implementation |
 
 Please read the full documentation of Captain Hook that can be found at [php.captainhook.info][captainhook-docs].
 
@@ -211,7 +211,7 @@ Results by [image](docs/assets/images/mago-sample-force-color.png)
 
 ## Documentation
 
-Full documentation may be found in [`docs`](docs/learn/README.md) folder into this repository, and may be read online without to do anything else.
+Full documentation may be found in [`docs`](docs/README.md) folder into this repository, and may be read online without to do anything else.
 
 As alternative, you may generate a professional static site with [Material for MkDocs][mkdocs-material].
 

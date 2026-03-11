@@ -13,13 +13,14 @@
         "source": "https://github.com/llaville/captainhook-bin-plugin"
     },
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "composer-runtime-api": "^2.0",
         "captainhook/captainhook": "^5.28.4",
         "composer/semver": "^3.0"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.8"
+        "bamarni/composer-bin-plugin": "^1.8",
+        "phar-io/phive": "^0.16.0"
     },
     "minimum-stability": "stable",
     "autoload": {

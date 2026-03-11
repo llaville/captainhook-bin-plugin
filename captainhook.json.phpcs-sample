@@ -1,0 +1,33 @@
+{
+    "config": {
+        "allow-failure": false,
+        "bootstrap": "examples/vendor-bin-autoloader.php",
+        "ansi-colors": true,
+        "git-directory": ".git",
+        "fail-on-first-error": false,
+        "verbosity": "normal",
+        "plugins": [
+            {
+                "plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin",
+                "options": {
+                    "binary-directory": "{$ENV|value-of:VENDOR_BIN_DIR|default:./tools}",
+                    "dependency-manager": "phive"
+                }
+            }
+        ]
+    },
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": "{$ENV|value-of:XDG_BIN_HOME}phpcs --standard=.github/linters/.phpcs.xml.dist --warning-severity=0 --colors",
+                "options": {
+                    "package-require": [
+                        "squizlabs/php_codesniffer",
+                        "^3.3 || ^4.0"
+                    ]
+                }
+            }
+        ]
+    }
+}

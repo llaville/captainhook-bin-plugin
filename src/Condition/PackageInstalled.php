@@ -28,7 +28,7 @@ use function sprintf;
  */
 class PackageInstalled implements Condition
 {
-    public function __construct(private string $packageName, private string $constraint = '*')
+    public function __construct(private readonly string $packageName, private readonly string $constraint = '*')
     {
     }
 
@@ -48,7 +48,7 @@ class PackageInstalled implements Condition
                         $isApplied = true;
                         break;
                     }
-                } catch (OutOfBoundsException $e) {
+                } catch (OutOfBoundsException) {
                     // @mago-expect lint:no-empty-catch-clause
                     // catch from InstalledVersions to avoid CaptainHook to prints failed action rather than skipped
                 }
@@ -57,7 +57,7 @@ class PackageInstalled implements Condition
 
         $io->write(
             sprintf(
-                '  <fg=cyan>Applied: Package %s</> %s (with constraint "%s")',
+                '  <fg=cyan>Applied: Composer package %s</> %s (with constraint "%s")',
                 $isApplied ? 'installed' : 'not installed',
                 $this->packageName,
                 $this->constraint

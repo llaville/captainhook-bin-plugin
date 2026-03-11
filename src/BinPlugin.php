@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Bartlett\CaptainHookBinPlugin;
 
-use Bartlett\CaptainHookBinPlugin\Condition\PackageInstalled;
 use CaptainHook\App\Config;
 use CaptainHook\App\Console\IO;
 use CaptainHook\App\Exception\ActionNotApplicable;
@@ -43,12 +42,18 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
     private float $startTime;
     private float $previousTime;
     private string $configDirectory;
+    private string $dependencyManager;
 
     public function configure(Config $config, IO $io, Repository $repository, Config\Plugin $plugin): void
     {
         parent::configure($config, $io, $repository, $plugin);
 
         $formatter = new Formatter($io, $config, $repository);
+
+        $this->dependencyManager = $plugin->getOptions()->get(
+            'dependency-manager',
+            DependencyManagerType::Composer->value
+        );
 
         /** @var string $configDirectory */
         $configDirectory = $plugin->getOptions()->get('config-directory', getcwd());
@@ -60,8 +65,10 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
 
         putenv('XDG_BIN_HOME=' . rtrim($binaryDirectory, '/\\') . DIRECTORY_SEPARATOR);
 
-        // Due to potential issue (@see https://github.com/captainhook-git/captainhook/issues/293#issuecomment-3949257149)
-        // that raise a "Typed property Bartlett\CaptainHookBinPlugin\BinPlugin::$previousTime must not be accessed before initialization"
+        // Due to potential issue
+        // (@see https://github.com/captainhook-git/captainhook/issues/293#issuecomment-3949257149)
+        // that raise a "Typed property Bartlett\CaptainHookBinPlugin\BinPlugin::$previousTime must not be accessed
+        // before initialization"
         // Be sure to initialize property first
         $this->previousTime = 0.0;
     }
@@ -89,9 +96,10 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
         }
         if (count($packageRequirement) > 0) {
             if (count($action->getConditions()) === 0) {
-                $condition = new Config\Condition('\\' . PackageInstalled::class, $packageRequirement);
+                $condition = DependencyManagerType::getCondition($this->dependencyManager, $packageRequirement);
 
-                // Due to @link https://github.com/captainhook-git/captainhook/issues/309, following syntax won't work as expected
+                // Due to @link https://github.com/captainhook-git/captainhook/issues/309,
+                // following syntax won't work as expected
                 // $collectorIO = new IO\CollectorIO($this->io);
                 $collectorIO = $this->io;
                 $conditionRunner = new Condition($collectorIO, $this->repository, $this->config, $hook->getName());

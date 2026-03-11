@@ -6,3 +6,4 @@ With many examples on common PHP tools, discover the Plugin features :
 2. How to use the `config-directory`, `config-file` and/or `XDG_CONFIG_HOME` env var with [PHPUnit](phpunit.md)
 3. How to use the `ansi-colors-flag` option with [PHPLint](phplint.md)
 4. How to use the `*-colors-flag` options (`auto`, `always`, `never`) with [Mago](mago.md)
+5. How to use the `dependency-manager` option with [PHP_CodeSniffer](phpcs.md) PHAR distribution
