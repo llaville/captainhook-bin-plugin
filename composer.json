@@ -25,7 +25,8 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Bartlett\\CaptainHookBinPlugin\\": "src/"
+            "Bartlett\\CaptainHookBinPlugin\\": "src/",
+            "Bartlett\\CaptainHookBinPluginTest\\": "tests/"
         }
     },
     "config": {

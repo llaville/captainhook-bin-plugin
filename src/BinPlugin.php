@@ -13,11 +13,11 @@ namespace Bartlett\CaptainHookBinPlugin;
 
 use CaptainHook\App\Config;
 use CaptainHook\App\Console\IO;
-use CaptainHook\App\Exception\ActionNotApplicable;
 use CaptainHook\App\Plugin;
 use CaptainHook\App\Runner\Action\Cli\Command\Formatter;
 use CaptainHook\App\Runner\Condition;
 use CaptainHook\App\Runner\Hook as RunnerHook;
+use CaptainHook\App\Runner\Hook\Printer;
 use SebastianFeldmann\Git\Repository;
 use Symfony\Component\Console\Terminal;
 
@@ -71,11 +71,12 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
         // before initialization"
         // Be sure to initialize property first
         $this->previousTime = 0.0;
+
+        $this->startTime = microtime(true);
     }
 
     public function beforeHook(RunnerHook $hook): void
     {
-        $this->startTime = microtime(true);
         $this->justify(
             "Before hook " . "<comment>{$hook->getName()}</comment> runs",
             "<fg=blue>[0.00s]</>",
@@ -106,12 +107,14 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
 
                 $collectorIO->write('  <fg=cyan>Condition: ' . $condition->getExec() . '</>', true, IO::VERBOSE);
                 if (!$conditionRunner->doesConditionApply($condition)) {
-                    throw new ActionNotApplicable();
+                    // Do not use Exception syntax, for reason given at
+                    // @link https://github.com/captainhook-git/captainhook/issues/309#issuecomment-4052951959
+                    //throw new ActionNotApplicable();
 
                     /** Alternative to Exception is to handle skipped action and print message yourself */
-                    // $hook->shouldSkipActions(true);
-                    // (new Printer($this->io))->actionSkipped($action);
-                    // return;
+                     $hook->shouldSkipActions(true);
+                     (new Printer($this->io))->actionSkipped($action);
+                     return;
                 }
             }
         }
