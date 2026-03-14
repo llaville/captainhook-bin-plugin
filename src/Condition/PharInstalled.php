@@ -28,6 +28,7 @@ use SebastianFeldmann\Git\Repository;
 use Throwable;
 
 use function in_array;
+
 use const PHP_OS;
 
 /**
@@ -70,17 +71,17 @@ class PharInstalled implements Condition
         $xmlConfigFileLocator = new PhiveXmlConfigFileLocator(
             $environment,
             $config,
-            $output
+            $output,
         );
 
         $xmlConfig = new LocalPhiveXmlConfig(
             new XmlFile(
                 $xmlConfigFileLocator->getFile(),
                 'https://phar.io/phive',
-                'phive'
+                'phive',
             ),
             new VersionConstraintParser(),
-            $environment
+            $environment,
         );
 
         $pharRegistry = $factory->getPharRegistry();
@@ -88,7 +89,7 @@ class PharInstalled implements Condition
         $statusCommandConfig = new StatusCommandConfig(
             $request->getOptions(),
             $xmlConfig,
-            $pharRegistry
+            $pharRegistry,
         );
 
         // \PharIo\Phive\Factory::getSourcesList
@@ -120,7 +121,7 @@ class PharInstalled implements Condition
 
                 $isApplied = Semver::satisfies(
                     $versionInstalled->getOriginalString(),
-                    $phar->getVersionConstraint()->asString()
+                    $phar->getVersionConstraint()->asString(),
                 );
                 if ($isApplied) {
                     break;
@@ -136,7 +137,7 @@ class PharInstalled implements Condition
                 '  <fg=cyan>Applied: PHAR tool %s</> %s (with constraint "%s")',
                 $isApplied ? 'installed' : 'not installed',
                 $this->packageName,
-                $this->constraint
+                $this->constraint,
             ),
             true,
             IO::VERBOSE,

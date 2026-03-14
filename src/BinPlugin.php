@@ -52,7 +52,7 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
 
         $this->dependencyManager = $plugin->getOptions()->get(
             'dependency-manager',
-            DependencyManagerType::Composer->value
+            DependencyManagerType::Composer->value,
         );
 
         /** @var string $configDirectory */

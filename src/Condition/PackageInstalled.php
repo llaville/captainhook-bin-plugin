@@ -60,7 +60,7 @@ class PackageInstalled implements Condition
                 '  <fg=cyan>Applied: Composer package %s</> %s (with constraint "%s")',
                 $isApplied ? 'installed' : 'not installed',
                 $this->packageName,
-                $this->constraint
+                $this->constraint,
             ),
             true,
             IO::VERBOSE,
