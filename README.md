@@ -178,7 +178,7 @@ Configuration for `bartlett/captainhook-bin-plugin` consists of the following pr
 | `package-require`    | The package name (Composer Identifier) and optionally a version constraint (Composer Semver syntax)  |
 | `config-directory`   | The Configuration directory where to find your binary dependency config file                         |
 | `config-file`        | Your binary dependency configuration filename                                                        |
-| `binary-directory`   | Your binary dependency lookup directory (see https://getcomposer.org/doc/06-config.md#bin-dir)       |
+| `binary-directory`   | Your binary dependency lookup directory (see <https://getcomposer.org/doc/06-config.md#bin-dir>)     |
 | `dependency-manager` | Your dependency manager : `Composer` (default), `Phive` (alternative) ... or your own implementation |
 
 Please read the full documentation of Captain Hook that can be found at [php.captainhook.info][captainhook-docs].
