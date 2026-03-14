@@ -112,9 +112,9 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
                     //throw new ActionNotApplicable();
 
                     /** Alternative to Exception is to handle skipped action and print message yourself */
-                     $hook->shouldSkipActions(true);
-                     (new Printer($this->io))->actionSkipped($action);
-                     return;
+                    $hook->shouldSkipActions(true);
+                    (new Printer($this->io))->actionSkipped($action);
+                    return;
                 }
             }
         }
