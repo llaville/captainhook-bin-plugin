@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD013 -->
 # Tutorials
 
 With many examples on common PHP tools, discover the Plugin features :
