@@ -166,7 +166,6 @@ That prints something like
 
 ![conditional-usage-2](docs/assets/images/conditional-usage-plugin-options.png)
 
-
 ## Configuration
 
 ### Configuration Properties

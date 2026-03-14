@@ -101,7 +101,6 @@ See how to use the `auto-colors-flag`, `always-colors-flag` or `never-colors-fla
     > 1. As CaptainHook does not (yet) delegate the color support (even if `ansi-colors` is set to TRUE), we must tell it on each binary dependency action.
     > 2. Refer to each dependency binary documentation to know what flag is accepted.
 
-
 === ":material-text-long: Results"
 
     As we have seen with PHPLint example, the color support is not propagated to each binary dependency action.

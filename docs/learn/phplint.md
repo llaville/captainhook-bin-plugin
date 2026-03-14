@@ -160,7 +160,6 @@ See how to use the `ansi-colors-flag` option.
     > 1. As CaptainHook does not (yet) delegate the color support (even if `ansi-colors` is set to TRUE), we must tell it on each binary dependency action.
     > 2. Refer to each dependency binary documentation to know what flag is accepted.
 
-
 === ":material-text-long: Results"
 
     ![ansi-colors-flag with PHPLint](../assets/images/ansi-colors-flag.png)

@@ -38,7 +38,6 @@ See how to use the `binary-directory` option and/or `XDG_BIN_HOME` environment v
     No security vulnerability advisories found.
     ```
 
-
 ## Run sample
 
 === ":octicons-command-palette-16: Test Hook"
