@@ -234,7 +234,5 @@ that validate files using ESLint only if it installed on your platform.
 [captainhook-conditions]: https://php.captainhook.info/conditions.html
 [captainhook-eslint]: https://github.com/Moxio/captainhook-eslint
 [composer]: https://getcomposer.org
-[keep-a-changelog]: https://keepachangelog.com/en/1.1.0/
 [mago]: https://github.com/carthage-software/mago
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material
-[xdg-base-dirs-spec]: https://specifications.freedesktop.org/basedir/latest/
