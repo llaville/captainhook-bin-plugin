@@ -111,6 +111,7 @@ For example, if you want to run action for at least PHP Code Sniffer 3.3 or grea
 
 > [!NOTE]
 > On Condition arguments :
+>
 > - the first entry is the Composer package name,
 > - the second entry is the version constraint (same syntax as Composer Semver), with default value to '*' means no constraint.
 
