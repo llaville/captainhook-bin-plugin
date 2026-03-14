@@ -21,23 +21,23 @@ See how to use the `auto-colors-flag`, `always-colors-flag` or `never-colors-fla
     >
     > Generated with Composer 2.9 (and composer-bin-plugin 1.9) on PHP 8.2 runtime
 
-	```text
-	[bamarni-bin] Checking namespace vendor-bin/mago
-	Loading composer repositories with package information
-	Updating dependencies
-	Lock file operations: 1 install, 0 updates, 0 removals
-	  - Locking carthage-software/mago (1.13.3)
-	Writing lock file
-	Installing dependencies from lock file (including require-dev)
-	Package operations: 1 install, 0 updates, 0 removals
-	  - Downloading carthage-software/mago (1.13.3)
-	  - Installing carthage-software/mago (1.13.3): Extracting archive
-		Skipped installation of bin composer/bin/mago for package carthage-software/mago: name conflicts with an existing file
-	Generating autoload files
-	1 package you are using is looking for funding.
-	Use the `composer fund` command to find out more!
-	No security vulnerability advisories found.
-	```
+    ```text
+    [bamarni-bin] Checking namespace vendor-bin/mago
+    Loading composer repositories with package information
+    Updating dependencies
+    Lock file operations: 1 install, 0 updates, 0 removals
+      - Locking carthage-software/mago (1.13.3)
+    Writing lock file
+    Installing dependencies from lock file (including require-dev)
+    Package operations: 1 install, 0 updates, 0 removals
+      - Downloading carthage-software/mago (1.13.3)
+      - Installing carthage-software/mago (1.13.3): Extracting archive
+        Skipped installation of bin composer/bin/mago for package carthage-software/mago: name conflicts with an existing file
+    Generating autoload files
+    1 package you are using is looking for funding.
+    Use the `composer fund` command to find out more!
+    No security vulnerability advisories found.
+    ```
 
 ## Run sample
 
@@ -49,44 +49,44 @@ See how to use the `auto-colors-flag`, `always-colors-flag` or `never-colors-fla
 
 === ":octicons-file-code-16: Configuration File"
 
-	```json hl_lines="13-15 24"
-	{
-		"config": {
-			"allow-failure": false,
-			"bootstrap": "examples/vendor-bin-autoloader.php",
-			"ansi-colors": true,
-			"git-directory": ".git",
-			"fail-on-first-error": false,
-			"verbosity": "normal",
-			"plugins": [
-				{
-					"plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin",
-					"options": {
-						"auto-colors-flag": "--colors=auto",
-						"always-colors-flag": "--colors=always",
-						"never-colors-flag": "--colors=never"
-					}
-				}
-			]
-		},
-		"pre-commit": {
-			"enabled": true,
-			"actions": [
-				{
-					"action": "vendor/bin/mago {$CONFIG|value-of:plugin>>\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.always-colors-flag} lint",
-					"config": {
-						"label": "Lint Files (with Mago)"
-					},
-					"options": {
-						"package-require": [
-							"carthage-software/mago"
-						]
-					}
-				}
-			]
-		}
-	}
-	```
+    ```json hl_lines="13-15 24"
+    {
+        "config": {
+            "allow-failure": false,
+            "bootstrap": "examples/vendor-bin-autoloader.php",
+            "ansi-colors": true,
+            "git-directory": ".git",
+            "fail-on-first-error": false,
+            "verbosity": "normal",
+            "plugins": [
+                {
+                    "plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin",
+                    "options": {
+                        "auto-colors-flag": "--colors=auto",
+                        "always-colors-flag": "--colors=always",
+                        "never-colors-flag": "--colors=never"
+                    }
+                }
+            ]
+        },
+        "pre-commit": {
+            "enabled": true,
+            "actions": [
+                {
+                    "action": "vendor/bin/mago {$CONFIG|value-of:plugin>>\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.always-colors-flag} lint",
+                    "config": {
+                        "label": "Lint Files (with Mago)"
+                    },
+                    "options": {
+                        "package-require": [
+                            "carthage-software/mago"
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+    ```
 
     > [!NOTE]
     > Explains about the `captainhook.json.mago-sample` config file
