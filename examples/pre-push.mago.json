@@ -9,7 +9,8 @@
                     "FORCE_COLOR={$ENV|value-of:FORCE_COLOR|default:0}",
                     "{$ENV|value-of:XDG_BIN_HOME}mago",
                     "{$CONFIG|value-of:plugin>>\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.auto-colors-flag}",
-                    "lint"
+                    "lint",
+                    "--baseline .github/linters/lint-baseline.toml"
                 ],
                 "config": {
                     "label": "Static Analysis (with Mago)"
