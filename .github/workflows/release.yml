@@ -22,7 +22,7 @@ on:
                 type: string
             box-output:
                 description: "Path to the PHP Archive made by the BOX"
-                required: true
+                required: false
                 default: ""
                 type: string
             box-manifest-version:
