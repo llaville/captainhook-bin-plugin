@@ -1,5 +1,6 @@
 {
     "output": "captainhook-bin-plugin.phar",
+    "main": false,
     "force-autodiscovery": true,
     "exclude-dev-files": false,
     "directories": [
