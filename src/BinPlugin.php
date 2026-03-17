@@ -13,6 +13,7 @@ namespace Bartlett\CaptainHookBinPlugin;
 
 use CaptainHook\App\Config;
 use CaptainHook\App\Console\IO;
+use CaptainHook\App\Exception\ActionNotApplicable;
 use CaptainHook\App\Plugin;
 use CaptainHook\App\Runner\Action\Cli\Command\Formatter;
 use CaptainHook\App\Runner\Condition;
@@ -109,12 +110,18 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
                 if (!$conditionRunner->doesConditionApply($condition)) {
                     // Do not use Exception syntax, for reason given at
                     // @link https://github.com/captainhook-git/captainhook/issues/309#issuecomment-4052951959
-                    //throw new ActionNotApplicable();
+                    // CAUTION:
+                    // preferred solution to solve contextual issue
+                    // @see https://github.com/captainhook-git/captainhook/discussions/310
+                    throw new ActionNotApplicable();
 
+                    // For following reason
+                    // @link https://github.com/captainhook-git/captainhook/issues/309#issuecomment-4072610082
+                    // we cannot use this alternative that break Plugin Behavior/Goals
                     /** Alternative to Exception is to handle skipped action and print message yourself */
-                    $hook->shouldSkipActions(true);
-                    (new Printer($this->io))->actionSkipped($action);
-                    return;
+                    //$hook->shouldSkipActions(true);
+                    //(new Printer($this->io))->actionSkipped($action);
+                    //return;
                 }
             }
         }

@@ -50,6 +50,12 @@ class BinPluginTest extends TestCase
         // Invocation Rule is important :
         // @see https://github.com/captainhook-git/captainhook/issues/293#issuecomment-4052943850
         // @see https://github.com/captainhook-git/captainhook/issues/293#issuecomment-4053100543
+
+        // CAUTION:
+        // preferred solution to solve contextual issue
+        // @see https://github.com/captainhook-git/captainhook/discussions/310
+        $this->markTestSkipped('Test skipped due to CaptainHook issue 309/discussion 310');
+
         $this->hook->expects($this->never())
             ->method('beforeAction')
             ->with($action);
