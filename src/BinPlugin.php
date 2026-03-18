@@ -153,7 +153,6 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
             "After action " . "<comment>{$action->getLabel()}</comment> runs",
             sprintf("<fg=blue>[%01.2fs]</>", $this->previousTime ? microtime(true) - $this->previousTime : 0.0),
         );
-        putenv('XDG_BIN_HOME');
         putenv('XDG_CONFIG_HOME');
         putenv('NO_COLOR');
     }
