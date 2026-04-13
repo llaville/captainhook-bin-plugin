@@ -5,7 +5,7 @@
 
 ## Goals
 
-See how to use the `ansi-colors-flag` option.
+See how to use the `colors` option with either `always` or `never` value to use a Symfony/Console `--ansi` compatible flag.
 
 ## Installation
 
@@ -106,25 +106,26 @@ See how to use the `ansi-colors-flag` option.
 === ":octicons-command-palette-16: Test Hook"
 
     ```shell
-    vendor/bin/captainhook hook:pre-commit -c captainhook.json.phplint-sample --verbose
+    vendor/bin/captainhook hook:pre-commit -c examples/captainhook-phplint-sample.json --verbose
     ```
 
 === ":octicons-file-code-16: Configuration File"
 
-    ```json hl_lines="13 22"
+    ```json hl_lines="13-14 26 32"
     {
         "config": {
             "allow-failure": false,
-            "bootstrap": "examples/vendor-bin-autoloader.php",
+            "bootstrap": "vendor-bin-autoloader.php",
             "ansi-colors": true,
-            "git-directory": ".git",
+            "git-directory": "../.git",
             "fail-on-first-error": false,
             "verbosity": "normal",
             "plugins": [
                 {
                     "plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin",
                     "options": {
-                        "ansi-colors-flag": "--ansi"
+                        "always-colors-flag": "--ansi",
+                        "never-colors-flag": "--no-ansi"
                     }
                 }
             ]
@@ -133,14 +134,17 @@ See how to use the `ansi-colors-flag` option.
             "enabled": true,
             "actions": [
                 {
-                    "action": "vendor/bin/phplint src/ {$CONFIG|value-of:plugin>>\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.ansi-colors-flag}",
+                    "action": [
+                        "vendor/bin/phplint",
+                        "src/",
+                         "{$ENV|value-of:\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.colors-flag|cache:false}"
+                    ],
                     "config": {
                         "label": "Lint Files (with PHPLint)"
                     },
                     "options": {
-                        "package-require": [
-                            "overtrue/phplint"
-                        ]
+                        "colors": "always",
+                        "package-require": "overtrue/phplint"
                     }
                 }
             ]
@@ -149,11 +153,19 @@ See how to use the `ansi-colors-flag` option.
     ```
 
     > [!NOTE]
-    > Explains about the `captainhook.json.phplint-sample` config file
+    > Explains about the `captainhook-phplint-sample.json` config file
     >
-    > The `{$CONFIG|value-of:plugin>>\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.ansi-colors-flag}` syntax allow to access the plugin config for `ansi-colors-flag`:
+    > The `{$ENV|value-of:\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.colors-flag|cache:false}` syntax
+    > allow to access the plugin config for `*-colors-flag` pre-set choices, matching the `colors` action/option value.
     >
-    > - the `ansi-colors-flag` option definition is `--ansi` (this is the common option on all PHP CLI tool that implement the `symfony/console` component)
+    > - the `always-colors-flag` pre-set is defined with `--ansi`
+    > - the `never-colors-flag` pre-set is defined with `--no-ansi`
+    >
+    > These pre-settings match common options on all PHP CLI tool that implement the `symfony/console` component.
+
+    > [!TIP]
+    > If you don't specify the `colors` option, as default value is equal to `auto`, and without `auto-colors-flag` definition (pre-setting),
+    > no additional flag is added to your action command.
 
     > [!IMPORTANT]
     >

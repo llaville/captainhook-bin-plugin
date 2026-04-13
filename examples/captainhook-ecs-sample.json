@@ -1,9 +1,9 @@
 {
     "config": {
         "allow-failure": false,
-        "bootstrap": "examples/vendor-bin-autoloader.php",
+        "bootstrap": "vendor-bin-autoloader.php",
         "ansi-colors": true,
-        "git-directory": ".git",
+        "git-directory": "../.git",
         "fail-on-first-error": false,
         "verbosity": "normal",
         "plugins": [
@@ -19,14 +19,17 @@
         "enabled": true,
         "actions": [
             {
-                "action": "{$ENV|value-of:XDG_BIN_HOME}ecs check --config=.github/linters/ecs.php --ansi",
+                "action": [
+                    "{$ENV|value-of:XDG_BIN_HOME}ecs",
+                    "check",
+                    "--config=.github/linters/ecs.php",
+                    "--ansi"
+                ],
                 "config": {
                     "label": "Checks Coding Standard (with ECS)"
                 },
                 "options": {
-                    "package-require": [
-                        "symplify/easy-coding-standard"
-                    ]
+                    "package-require": "symplify/easy-coding-standard"
                 }
             }
         ]

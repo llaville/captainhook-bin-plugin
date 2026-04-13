@@ -5,7 +5,8 @@
 
 ## Goals
 
-See how to use the `binary-directory` option and/or `XDG_BIN_HOME` environment variable.
+See how to use the `binary-directory` option
+to specify the binary command folder (`XDG_BIN_HOME` environment variable) of your favorite CLI tools.
 
 ## Installation
 
@@ -43,12 +44,12 @@ See how to use the `binary-directory` option and/or `XDG_BIN_HOME` environment v
 === ":octicons-command-palette-16: Test Hook"
 
     ```shell
-    vendor/bin/captainhook hook:pre-commit -c captainhook.json.ecs-sample --verbose
+    vendor/bin/captainhook hook:pre-commit -c examples/captainhook-ecs-sample.json --verbose
     ```
 
 === ":octicons-file-code-16: Configuration File"
 
-    ```json hl_lines="13 22"
+    ```json hl_lines="13 23"
     {
         "config": {
             "allow-failure": false,
@@ -70,14 +71,17 @@ See how to use the `binary-directory` option and/or `XDG_BIN_HOME` environment v
             "enabled": true,
             "actions": [
                 {
-                    "action": "{$ENV|value-of:XDG_BIN_HOME}ecs check --config=.github/linters/ecs.php --ansi",
+                    "action": [
+                        "{$ENV|value-of:XDG_BIN_HOME}ecs",
+                        "check",
+                        "--config=.github/linters/ecs.php",
+                        "--ansi"
+                    ],
                     "config": {
                         "label": "Checks Coding Standard (with ECS)"
                     },
                     "options": {
-                        "package-require": [
-                            "symplify/easy-coding-standard"
-                        ]
+                        "package-require": "symplify/easy-coding-standard"
                     }
                 }
             ]
@@ -86,12 +90,13 @@ See how to use the `binary-directory` option and/or `XDG_BIN_HOME` environment v
     ```
 
     > [!NOTE]
-    > Explains about the `captainhook.json.ecs-sample` config file
+    > Explains about the `captainhook-ecs-sample.json` config file
     >
-    > The `{$ENV|value-of:XDG_BIN_HOME}` syntax allow to lookup directory where to find binary vendor:
+    > The `{$ENV|value-of:XDG_BIN_HOME}` syntax (in your `action` definition line) allow to lookup directory
+    > where to find the binary vendor:
     >
-    > 1. by the `binary-directory` option definition
-    > 2. allow overrides look up directory by the `XDG_BIN_HOME` env var
+    > 1. declared by the `binary-directory` option definition
+    > 2. allow overrides look up directory by the `XDG_BIN_HOME` environment variable
 
 === ":material-text-long: Results"
 

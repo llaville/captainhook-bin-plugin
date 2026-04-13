@@ -5,7 +5,7 @@
 
 ## Goals
 
-See how to use the plugin with PHAR tools in [PHIVE](https://github.com/phar-io/phive) context.
+See how to use this plugin with your CLI tools in [PHIVE](https://github.com/phar-io/phive) context (PHAR distribution).
 
 ## Installation
 
@@ -48,18 +48,18 @@ See how to use the plugin with PHAR tools in [PHIVE](https://github.com/phar-io/
 === ":octicons-command-palette-16: Test Hook"
 
     ```shell
-    vendor/bin/captainhook hook:pre-commit -c captainhook.json.phpcs-sample --verbose
+    vendor/bin/captainhook hook:pre-commit -c examples/captainhook-phpcs-sample.json --verbose
     ```
 
 === ":octicons-file-code-16: Configuration File"
 
-    ```json hl_lines="13 14 23"
+    ```json hl_lines="13 14 24"
     {
         "config": {
             "allow-failure": false,
-            "bootstrap": "examples/vendor-bin-autoloader.php",
+            "bootstrap": "vendor-bin-autoloader.php",
             "ansi-colors": true,
-            "git-directory": ".git",
+            "git-directory": "../.git",
             "fail-on-first-error": false,
             "verbosity": "normal",
             "plugins": [
@@ -76,7 +76,12 @@ See how to use the plugin with PHAR tools in [PHIVE](https://github.com/phar-io/
             "enabled": true,
             "actions": [
                 {
-                    "action": "{$ENV|value-of:XDG_BIN_HOME}phpcs --standard=.github/linters/.phpcs.xml.dist --warning-severity=0 --colors",
+                    "action": [
+                        "{$ENV|value-of:XDG_BIN_HOME}phpcs",
+                        "--standard=.github/linters/.phpcs.xml.dist",
+                        "--warning-severity=0",
+                        "--colors"
+                    ],
                     "options": {
                         "package-require": [
                             "squizlabs/php_codesniffer",
@@ -90,12 +95,13 @@ See how to use the plugin with PHAR tools in [PHIVE](https://github.com/phar-io/
     ```
 
     > [!NOTE]
-    > Explains about the `captainhook.json.phpcs-sample` config file
+    > Explains about the `captainhook-phpcs-sample.json` config file
     >
-    > The `{$ENV|value-of:XDG_BIN_HOME}` syntax allow to lookup directory where to find the PHAR tools installad by Phive:
+    > The `{$ENV|value-of:XDG_BIN_HOME}` syntax (in your `action` definition line) allow to lookup directory
+    > where to find the PHAR tools installed by Phive:
     >
     > 1. when `dependency-manager` is set to **phive**, the `binary-directory` option definition (`default` value) must specify the same target directory as Phive.
-    > 2. allow overrides look up directory by the `XDG_BIN_HOME` env var
+    > 2. allow overrides look up directory by the `XDG_BIN_HOME` environment variable
 
 === ":material-text-long: Results"
 

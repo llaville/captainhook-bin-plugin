@@ -18,10 +18,11 @@ use CaptainHook\App\Plugin;
 use CaptainHook\App\Runner\Action\Cli\Command\Formatter;
 use CaptainHook\App\Runner\Condition;
 use CaptainHook\App\Runner\Hook as RunnerHook;
-use CaptainHook\App\Runner\Hook\Printer;
+use CaptainHook\App\Runner\Util;
 use SebastianFeldmann\Git\Repository;
 use Symfony\Component\Console\Terminal;
 
+use function boolval;
 use function count;
 use function file_exists;
 use function function_exists;
@@ -29,7 +30,7 @@ use function getcwd;
 use function is_array;
 use function mb_strwidth;
 use function microtime;
-use function putenv;
+use function realpath;
 use function rtrim;
 use function sprintf;
 use function strlen;
@@ -40,31 +41,34 @@ use function strlen;
  */
 class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
 {
+    private const DEFAULT_VERBOSITY_MESSAGE = IO::VERY_VERBOSE;
     private float $startTime;
     private float $previousTime;
-    private string $configDirectory;
     private string $dependencyManager;
+    private Formatter $formatter;
 
     public function configure(Config $config, IO $io, Repository $repository, Config\Plugin $plugin): void
     {
         parent::configure($config, $io, $repository, $plugin);
 
-        $formatter = new Formatter($io, $config, $repository);
+        $this->formatter = new Formatter($io, $config, $repository);
 
         $this->dependencyManager = $plugin->getOptions()->get(
             'dependency-manager',
             DependencyManagerType::Composer->value,
         );
 
-        /** @var string $configDirectory */
-        $configDirectory = $plugin->getOptions()->get('config-directory', getcwd());
-        $this->configDirectory = $formatter->format($configDirectory);
+        $configDirectory = Util::getEnv(
+            'XDG_CONFIG_HOME',
+            $plugin->getOptions()->get('config-directory', getcwd()),
+        );
+        $_ENV['XDG_CONFIG_HOME'] = realpath($this->formatter->format($configDirectory));
 
         /** @var string $binaryDirectory */
         $binaryDirectory = $plugin->getOptions()->get('binary-directory', getcwd());
-        $binaryDirectory = $formatter->format($binaryDirectory);
+        $binaryDirectory = $this->formatter->format($binaryDirectory);
 
-        putenv('XDG_BIN_HOME=' . rtrim($binaryDirectory, '/\\') . DIRECTORY_SEPARATOR);
+        $_ENV['XDG_BIN_HOME'] = rtrim($binaryDirectory, '/\\') . DIRECTORY_SEPARATOR;
 
         // Due to potential issue
         // (@see https://github.com/captainhook-git/captainhook/issues/293#issuecomment-3949257149)
@@ -82,6 +86,7 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
             "Before hook " . "<comment>{$hook->getName()}</comment> runs",
             "<fg=blue>[0.00s]</>",
         );
+        $this->settings();
     }
 
     public function beforeAction(RunnerHook $hook, Config\Action $action): void
@@ -91,6 +96,7 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
             "Before action " . "<comment>{$action->getLabel()}</comment> runs",
             "<fg=blue>[0.00s]</>",
         );
+        $this->settings($action);
 
         $packageRequirement = $action->getOptions()->get('package-require', []);
         if (!is_array($packageRequirement)) {
@@ -125,26 +131,6 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
                 }
             }
         }
-
-        $configFile = $action->getOptions()->get('config-file');
-
-        if (null !== $configFile) {
-            $configPath = rtrim($this->configDirectory, '/\\') . DIRECTORY_SEPARATOR . $configFile;
-            if (file_exists($configPath)) {
-                putenv('XDG_CONFIG_HOME=' . $configPath);
-            }
-        }
-
-        $colors = $action->getOptions()->get('colors', 'auto');
-        if ('force' === $colors) {
-            putenv('FORCE_COLOR=1');
-        } else {
-            $colorized = match ($colors) {
-                'never' => false,
-                default => true, // always or auto values are acceptable
-            };
-            putenv('NO_COLOR=' . !$colorized);
-        }
     }
 
     public function afterAction(RunnerHook $hook, Config\Action $action): void
@@ -153,8 +139,7 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
             "After action " . "<comment>{$action->getLabel()}</comment> runs",
             sprintf("<fg=blue>[%01.2fs]</>", $this->previousTime ? microtime(true) - $this->previousTime : 0.0),
         );
-        putenv('XDG_CONFIG_HOME');
-        putenv('NO_COLOR');
+        unset($_ENV['NO_COLOR'], $_ENV['FORCE_COLOR']);
     }
 
     public function afterHook(RunnerHook $hook): void
@@ -163,25 +148,116 @@ class BinPlugin extends Plugin\Hook\Base implements Plugin\Hook
             "After hook " . "<comment>{$hook->getName()}</comment> runs",
             sprintf("<fg=blue>[%01.2fs]</>", microtime(true) - $this->startTime),
         );
+
+        unset($_ENV['XDG_BIN_HOME'], $_ENV['XDG_CONFIG_HOME']);
     }
 
-    private function justify(string $first, ?string $second = null, array $options = []): void
+    private function settings(?Config\Action $action = null): void
     {
-        $options = [
-            'first'  => ($options['first'] ?? []) + ['bg' => null, 'fg' => 37, 'bold' => 0],
-            'second' => ($options['second'] ?? []) + ['bg' => null, 'fg' => 37, 'bold' => 1],
-            'sep'    => $options['sep'] ?? '.',
-        ];
+        $this->io->write('  <fg=cyan>Settings:</>', true, self::DEFAULT_VERBOSITY_MESSAGE);
 
+        if (null === $action) {
+            $this->justify(
+                '[<comment>dependency-manager</comment>]',
+                '<info>' . $this->dependencyManager . '</info>',
+            );
+            $this->justify(
+                '[<comment>binary-directory (XDG_BIN_HOME)</comment>]',
+                '<info>' . $_ENV['XDG_BIN_HOME'] . '</info>',
+            );
+            $this->justify(
+                '[<comment>config-directory (XDG_CONFIG_HOME)</comment>]',
+                '<info>' . $_ENV['XDG_CONFIG_HOME'] . '</info>',
+            );
+            return;
+        }
+
+        $configFile = $action->getOptions()->get('config-file');
+
+        if (null !== $configFile) {
+            $this->justify(
+                '[<comment>config-file</comment>]',
+                '<info>' . $configFile . '</info>',
+            );
+            $configPath = $configFile;
+            $configPath = $this->formatter->format($configPath);
+            $_ENV['\\' . __CLASS__ . '.config-file'] = $configPath;
+
+            $this->justify(
+                '[<comment>config-file (resolved)</comment>]',
+                file_exists($configPath)
+                    ? '<info>' . $configPath . '</info>'
+                    : sprintf('<fg=yellow>%s</>', 'not found'),
+            );
+        }
+
+        $forceColor = boolval(Util::getEnv('FORCE_COLOR', '0'));
+        $default = $forceColor ? 'always' : 'auto';
+
+        $colors = $action->getOptions()->get('colors', $default);
+        $this->justify(
+            '[<comment>colors</comment>]',
+            '<info>' . $colors . '</info>',
+        );
+
+        if (!$this->config->useAnsiColors()) {
+            $colors = 'never';
+        }
+
+        $colorized = match ($colors) {
+            'never' => false,
+            default => true, // always or auto values are acceptable
+        };
+        $_ENV['NO_COLOR'] = !$colorized;
+        $_ENV['FORCE_COLOR'] = 'force' === $colors ? '1' : '0';
+
+        if ('force' === $colors || $forceColor) {
+            // fallback to color flag syntax, if the CLI tools used does not provide FORCE_COLOR env var support
+            $colors = 'always';
+        }
+
+        $this->justify(
+            '[<comment>colors (NO_COLOR)</comment>]',
+            '<info>' . ($_ENV['NO_COLOR'] ? 'true' : 'false') . '</info>',
+        );
+        $this->justify(
+            '[<comment>colors (FORCE_COLOR)</comment>]',
+            '<info>' . ($_ENV['FORCE_COLOR'] ? 'true' : 'false') . '</info>',
+        );
+
+        $packageRequirement = $action->getOptions()->get('package-require', []);
+        if (!is_array($packageRequirement)) {
+            $packageRequirement = [$packageRequirement];
+        }
+        $this->justify(
+            '[<comment>package-require</comment>]',
+            rtrim(
+                '<info>' . ($packageRequirement[0] ?? 'false') . '</info>'
+                . ' ' . ($packageRequirement[1] ?? ''),
+            ),
+        );
+
+        $this->io->write('  <fg=cyan>Command: </>', false, self::DEFAULT_VERBOSITY_MESSAGE);
+        $this->io->write($action->getAction(), true, self::DEFAULT_VERBOSITY_MESSAGE);
+
+        $colorsFlag = $this->plugin->getOptions()->get($colors . '-colors-flag', '');
+        if ('' === $colorsFlag) {
+            return;
+        }
+        $_ENV['\\' . __CLASS__ . '.colors-flag'] = $colorsFlag;
+    }
+
+    private function justify(string $first, ?string $second = null, ?int $verbosity = self::DEFAULT_VERBOSITY_MESSAGE): void
+    {
         $second        = (string) $second;
         $dashWidth     = (new Terminal())->getWidth() - ($this->strwidth($first) + $this->strwidth($second));
         // remove left and right margins because we're going to add 1 space on each side (after/before the text).
         // if we don't have a second element, we just remove the left margin
         $dashWidth -= $second === '' ? 1 : 2;
-        $sep = $dashWidth >= 0 ? str_repeat((string) $options['sep'], $dashWidth) : '';
+        $sep = $dashWidth >= 0 ? str_repeat('.', $dashWidth) : '';
 
-        $this->io->write([$first, $sep, $second], false, IO::VERY_VERBOSE);
-        $this->io->write('', true, IO::VERY_VERBOSE);
+        $this->io->write([$first, $sep, $second], false, $verbosity);
+        $this->io->write('', true, $verbosity);
     }
 
     private function strwidth(string $string): int

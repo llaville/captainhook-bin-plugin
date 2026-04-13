@@ -49,4 +49,4 @@ markdown_extensions:
     - github-callouts
 nav:
     - "Home": README.md
-    - "Learn": learn/README.md
+    - "Learn by examples": examples/README.md

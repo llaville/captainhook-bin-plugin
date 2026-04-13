@@ -1,0 +1,45 @@
+{
+    "config": {
+        "allow-failure": false,
+        "bootstrap": "vendor-bin-autoloader.php",
+        "ansi-colors": true,
+        "git-directory": "../.git",
+        "fail-on-first-error": false,
+        "verbosity": "normal",
+        "plugins": [
+            {
+                "plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin",
+                "options": {
+                    "binary-directory": "{$ENV|value-of:VENDOR_BIN_DIR|default:vendor/bin}",
+                    "config-directory": "{$ENV|value-of:XDG_CONFIG_HOME|default:.github/linters}",
+                    "always-colors-flag": "--ansi",
+                    "never-colors-flag": "--no-ansi"
+                }
+            }
+        ]
+    },
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": [
+                    "{$ENV|value-of:XDG_BIN_HOME}ecs",
+                    "check",
+                    "--config={$ENV|value-of:\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.config-file|cache:false}",
+                    "--no-diffs",
+                    "--no-progress-bar",
+                    "{$ENV|value-of:\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.colors-flag|cache:false}",
+                    "{$STAGED_FILES|of-type:php|separated-by: }"
+                ],
+                "config": {
+                    "label": "Checks Coding Standard (with ECS)"
+                },
+                "options": {
+                    "colors": "force",
+                    "config-file": "{$ENV|value-of:XDG_CONFIG_HOME}/ecs.php",
+                    "package-require": "symplify/easy-coding-standard"
+                }
+            }
+        ]
+    }
+}

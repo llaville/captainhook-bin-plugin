@@ -5,7 +5,8 @@
 
 ## Goals
 
-See how to use the `config-directory`, `config-file` options and/or `XDG_CONFIG_HOME` environment variable.
+See how to use the `config-directory`, `config-file` options
+to specify the configuration file lookup directory (`XDG_CONFIG_HOME` environment variable) of your favorite CLI tools.
 
 ## Installation
 
@@ -102,23 +103,26 @@ See how to use the `config-directory`, `config-file` options and/or `XDG_CONFIG_
 === ":octicons-command-palette-16: Test Hook"
 
     ```shell
-    XDG_CONFIG_HOME=.github/linters/ vendor/bin/captainhook hook:pre-commit -c captainhook.json.phpunit-sample --verbose
+    XDG_CONFIG_HOME=.github/linters vendor/bin/captainhook hook:pre-commit -c examples/captainhook-phpunit-sample.json --verbose
     ```
 
 === ":octicons-file-code-16: Configuration File"
 
-    ```json hl_lines="19 24"
+    ```json hl_lines="24 31"
     {
         "config": {
             "allow-failure": false,
-            "bootstrap": "examples/vendor-bin-autoloader.php",
+            "bootstrap": "vendor-bin-autoloader.php",
             "ansi-colors": true,
-            "git-directory": ".git",
+            "git-directory": "../.git",
             "fail-on-first-error": false,
             "verbosity": "normal",
             "plugins": [
                 {
-                    "plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin"
+                    "plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin",
+                    "options": {
+                        "binary-directory": "{$ENV|value-of:VENDOR_BIN_DIR|default:vendor/bin}"
+                    }
                 }
             ]
         },
@@ -126,15 +130,17 @@ See how to use the `config-directory`, `config-file` options and/or `XDG_CONFIG_
             "enabled": true,
             "actions": [
                 {
-                    "action": "vendor/bin/phpunit --config {$ENV|value-of:XDG_CONFIG_HOME|default:./phpunit.xml}",
+                    "action": [
+                        "{$ENV|value-of:XDG_BIN_HOME}phpunit",
+                        "--configuration {$ENV|value-of:\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.config-file|cache:false}",
+                        "--do-not-fail-on-phpunit-warning"
+                    ],
                     "config": {
                         "label": "Unit tests (with PHPUnit)"
                     },
                     "options": {
-                        "config-file": "phpunit.xml.dist",
-                        "package-require": [
-                            "phpunit/phpunit"
-                        ]
+                        "config-file": "{$ENV|value-of:XDG_CONFIG_HOME}/phpunit.xml.dist",
+                        "package-require": "phpunit/phpunit"
                     }
                 }
             ]
@@ -143,13 +149,18 @@ See how to use the `config-directory`, `config-file` options and/or `XDG_CONFIG_
     ```
 
     > [!NOTE]
-    > Explains about the `captainhook.json.phpunit-sample` config file
+    > Explains about the `captainhook-phpunit-sample.json` config file
     >
-    > The `{$ENV|value-of:XDG_CONFIG_HOME|default:./phpunit.xml}` syntax allow to select the PHPUnit config file:
+    > The `{$ENV|value-of:\Bartlett\CaptainHookBinPlugin\BinPlugin.config-file|cache:false}` syntax allow
+    > to select the PHPUnit config file:
     >
-    > 1. by the `config-file` option (search for `phpunit.xml.dist`, default to `phpunit.xml`)
-    > 2. allow overrides look up directory by the `XDG_CONFIG_HOME` env var
+    > 1. declared by the `config-file` option
+    > 2. allow overrides look up configuration directory by the `XDG_CONFIG_HOME` environment variable
+
+    > [!IMPORTANT]
+    > When `config-directory` plugin option is not defined, the default look up folder is the current working directory,
+    > unless `XDG_CONFIG_HOME` environment variable override this location.
 
 === ":material-text-long: Results"
 
-    ![XDG_CONFIG_HOME with PHPUnit 11](../assets/images/xdg-config-phpunit-11.png)
+    ![XDG_CONFIG_HOME with PHPUnit 10](../assets/images/xdg-config-phpunit-10.png)

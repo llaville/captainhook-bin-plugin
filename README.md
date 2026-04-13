@@ -118,14 +118,14 @@ For example, if you want to run action for at least PHP Code Sniffer 3.3 or grea
 Try it with following command :
 
 ```shell
-vendor/bin/captainhook hook:pre-commit --configuration captainhook.json.sample1
+vendor/bin/captainhook hook:pre-commit --configuration captainhook-sample1.json
 ```
 
 That prints something like
 
 ![conditional-usage-1a](docs/assets/images/conditional-usage-standard-way.png)
 
-Know more when verbose mode is enabled (level 1)
+Know more when verbose mode is enabled (at least level 1)
 
 ![conditional-usage-1b](docs/assets/images/conditional-usage-standard-way-verbose.png)
 
@@ -160,7 +160,7 @@ For example, if you want to run action for at least PHP Code Sniffer 3.3 or grea
 Try it with following command :
 
 ```shell
-vendor/bin/captainhook hook:pre-commit --configuration captainhook.json.sample2 --verbose
+vendor/bin/captainhook hook:pre-commit --configuration captainhook-sample2.json --verbose
 ```
 
 That prints something like
@@ -173,21 +173,22 @@ That prints something like
 
 Configuration for `bartlett/captainhook-bin-plugin` consists of the following properties:
 
-| Property             | Description                                                                                          |
-|----------------------|------------------------------------------------------------------------------------------------------|
-| `package-require`    | The package name (Composer Identifier) and optionally a version constraint (Composer Semver syntax)  |
-| `config-directory`   | The Configuration directory where to find your binary dependency config file                         |
-| `config-file`        | Your binary dependency configuration filename                                                        |
-| `binary-directory`   | Your binary dependency lookup directory (see <https://getcomposer.org/doc/06-config.md#bin-dir>)     |
-| `dependency-manager` | Your dependency manager : `Composer` (default), `Phive` (alternative) ... or your own implementation |
+| Property             | Description                                                                                               |
+|----------------------|-----------------------------------------------------------------------------------------------------------|
+| `package-require`    | The package name (Composer Identifier) and optionally a version constraint (Composer Semver syntax)       |
+| `config-directory`   | The Configuration directory where to find your binary dependency config file                              |
+| `config-file`        | Your binary dependency configuration filename                                                             |
+| `binary-directory`   | Your binary dependency lookup directory (see <https://getcomposer.org/doc/06-config.md#bin-dir>)          |
+| `dependency-manager` | Your dependency manager : `Composer` (default), `Phive` (alternative) ... or your own implementation      |
+| `colors`             | Choice what colors flag (pre-set) you want to use for your CLI tool : `auto` (default), `always`, `never` |
 
 Please read the full documentation of Captain Hook that can be found at [php.captainhook.info][captainhook-docs].
 
 ## Learn by example
 
-On official documentation, you can find [many examples](docs/learn/README.md) that demonstrate features of this plugin.
+On official documentation, you can find [many examples](docs/examples/README.md) that demonstrate features of this plugin.
 
-With `captainhook.json.sample` config file, you can quickly see all plugin options defined with a `pre-push` hook
+With `captainhook-sample.json` config file, you can quickly see all plugin options defined with a `pre-push` hook
 running the [Mago][mago] PHP toolchain.
 
 This is an efficient example that show (if binary dependency support it), how to run the same CaptainHook config file
@@ -196,18 +197,27 @@ without to change its contents, and override only Environment Variables.
 First try with :
 
 ```shell
-vendor/bin/captainhook hook:pre-push -c captainhook.json.sample --verbose
+vendor/bin/captainhook hook:pre-push -c captainhook-sample.json --verbose
 ```
 
-Results by [image](docs/assets/images/mago-sample-auto-colors.png)
+Gave following results
+
+![results](docs/assets/images/mago-sample-auto-colors.png)
 
 Second try with :
 
 ```shell
-FORCE_COLOR=1 vendor/bin/captainhook hook:pre-push -c captainhook.json.sample --verbose
+FORCE_COLOR=1 vendor/bin/captainhook hook:pre-push -c captainhook-sample.json --verbose
 ```
 
-Results by [image](docs/assets/images/mago-sample-force-color.png)
+Gave following results
+
+![results](docs/assets/images/mago-sample-force-color.png)
+
+> [!TIP]
+> Since release 1.1.0, the verbose level 2 display contextual information for an easy debugging
+>
+> ![very-verbose-mode](docs/assets/images/plugin-very-verbose-mode.png)
 
 ## Documentation
 

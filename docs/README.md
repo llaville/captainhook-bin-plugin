@@ -10,8 +10,10 @@ With this plugin, you don't have to think about it :
 
 And more than just and if/else execution strategy, this plugin allow to avoid hard-coding arguments in your `action` definition.
 
-Learn more with the [tutorials section](learn/README.md)
-
 > [!CAUTION]
 >
 > Requires [CaptainHook 5.28.4](https://github.com/captainhook-git/captainhook/releases/tag/5.28.4) or greater.
+
+## Learning
+
+Learn by examples to know more about this plugin features on [tutorials section](examples/README.md)

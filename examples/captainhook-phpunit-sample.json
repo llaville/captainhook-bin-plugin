@@ -1,0 +1,37 @@
+{
+    "config": {
+        "allow-failure": false,
+        "bootstrap": "vendor-bin-autoloader.php",
+        "ansi-colors": true,
+        "git-directory": "../.git",
+        "fail-on-first-error": false,
+        "verbosity": "normal",
+        "plugins": [
+            {
+                "plugin": "\\Bartlett\\CaptainHookBinPlugin\\BinPlugin",
+                "options": {
+                    "binary-directory": "{$ENV|value-of:VENDOR_BIN_DIR|default:vendor/bin}"
+                }
+            }
+        ]
+    },
+    "pre-commit": {
+        "enabled": true,
+        "actions": [
+            {
+                "action": [
+                    "{$ENV|value-of:XDG_BIN_HOME}phpunit",
+                    "--configuration {$ENV|value-of:\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.config-file|cache:false}",
+                    "--do-not-fail-on-phpunit-warning"
+                ],
+                "config": {
+                    "label": "Unit tests (with PHPUnit)"
+                },
+                "options": {
+                    "config-file": "{$ENV|value-of:XDG_CONFIG_HOME}/phpunit.xml.dist",
+                    "package-require": "phpunit/phpunit"
+                }
+            }
+        ]
+    }
+}
