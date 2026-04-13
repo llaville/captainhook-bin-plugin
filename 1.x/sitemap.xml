@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/</loc>
-         <lastmod>2026-03-16</lastmod>
+         <lastmod>2026-04-13</lastmod>
     </url>
     <url>
-         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/learn/</loc>
-         <lastmod>2026-03-16</lastmod>
+         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/examples/</loc>
+         <lastmod>2026-04-13</lastmod>
     </url>
     <url>
-         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/learn/ecs/</loc>
-         <lastmod>2026-03-16</lastmod>
+         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/examples/ecs/</loc>
+         <lastmod>2026-04-13</lastmod>
     </url>
     <url>
-         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/learn/mago/</loc>
-         <lastmod>2026-03-16</lastmod>
+         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/examples/mago/</loc>
+         <lastmod>2026-04-13</lastmod>
     </url>
     <url>
-         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/learn/phpcs/</loc>
-         <lastmod>2026-03-16</lastmod>
+         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/examples/phpcs/</loc>
+         <lastmod>2026-04-13</lastmod>
     </url>
     <url>
-         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/learn/phplint/</loc>
-         <lastmod>2026-03-16</lastmod>
+         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/examples/phplint/</loc>
+         <lastmod>2026-04-13</lastmod>
     </url>
     <url>
-         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/learn/phpunit/</loc>
-         <lastmod>2026-03-16</lastmod>
+         <loc>https://llaville.github.io/captainhook-bin-plugin/1.x/examples/phpunit/</loc>
+         <lastmod>2026-04-13</lastmod>
     </url>
 </urlset>

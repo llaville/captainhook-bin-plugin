@@ -10,7 +10,7 @@
         <meta name="author" content="Laurent Laville">
       
       
-        <link rel="canonical" href="https://llaville.github.io/captainhook-bin-plugin/1.x/learn/">
+        <link rel="canonical" href="https://llaville.github.io/captainhook-bin-plugin/1.x/examples/">
       
       
         <link rel="prev" href="..">
@@ -21,11 +21,11 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Learn - CaptainHookBinPlugin</title>
+        <title>Learn by examples - CaptainHookBinPlugin</title>
       
     
     
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Learn
+              Learn by examples
             
           </span>
         </div>
@@ -248,7 +248,7 @@
   
     
   
-  Learn
+  Learn by examples
 
       </a>
     </li>
@@ -343,6 +343,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learn by examples
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -350,7 +368,7 @@
   <span class="md-ellipsis">
     
   
-    Learn
+    Learn by examples
   
 
     
@@ -359,6 +377,69 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-the-binary-directory-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use the binary-directory option
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-the-config-directory-and-config-file-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use the config-directory and config-file options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-the-colors-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use the colors option
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-the-dependency-manager-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use the dependency-manager option
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -384,6 +465,58 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-the-binary-directory-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use the binary-directory option
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-the-config-directory-and-config-file-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use the config-directory and config-file options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-the-colors-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use the colors option
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-the-dependency-manager-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use the dependency-manager option
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -401,14 +534,34 @@
 
 <!-- markdownlint-disable MD013 -->
 <h1 id="tutorials">Tutorials</h1>
-<p>With many examples on common PHP tools, discover the Plugin features :</p>
-<ol>
-<li>How to use the <code>binary-directory</code> option and/or <code>XDG_BIN_HOME</code> env var with <a href="ecs/">Easy-Coding-Standard</a></li>
-<li>How to use the <code>config-directory</code>, <code>config-file</code> and/or <code>XDG_CONFIG_HOME</code> env var with <a href="phpunit/">PHPUnit</a></li>
-<li>How to use the <code>ansi-colors-flag</code> option with <a href="phplint/">PHPLint</a></li>
-<li>How to use the <code>*-colors-flag</code> options (<code>auto</code>, <code>always</code>, <code>never</code>) with <a href="mago/">Mago</a></li>
-<li>How to use the <code>dependency-manager</code> option with <a href="phpcs/">PHP_CodeSniffer</a> PHAR distribution</li>
-</ol>
+<p>With many examples on common PHP tools, discover this plugin features :</p>
+<h2 id="how-to-use-the-binary-directory-option">How to use the <code>binary-directory</code> option</h2>
+<p>With <a href="ecs/">Easy-Coding-Standard</a>,
+we will see how to specify the binary command folder (<code>XDG_BIN_HOME</code> environment variable)
+of your favorite CLI tools.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you prefer install your tools with PHIVE rather than Composer, have a look on how to use the <code>dependency-manager</code> option.</p>
+</div>
+<h2 id="how-to-use-the-config-directory-and-config-file-options">How to use the <code>config-directory</code> and <code>config-file</code> options</h2>
+<p>With <a href="phpunit/">PHPUnit</a>,
+we will see how to specify the configuration file lookup directory (<code>XDG_CONFIG_HOME</code> environment variable)
+of your favorite CLI tools.</p>
+<h2 id="how-to-use-the-colors-option">How to use the <code>colors</code> option</h2>
+<ul>
+<li>
+<p>With <a href="mago/">Mago</a>,
+we will see how to add automagically <code>--colors=&lt;when&gt;</code> flag syntax (<strong>when</strong> = <code>auto</code>|<code>always</code>|<code>never</code>)
+to your <code>action</code> definition line.</p>
+</li>
+<li>
+<p>With <a href="phplint/">PHPLint</a>,
+we will see how to add automagically <code>--ansi</code> flag syntax (common to all Symfony Console tools)
+to your <code>action</code> definition line.</p>
+</li>
+</ul>
+<h2 id="how-to-use-the-dependency-manager-option">How to use the <code>dependency-manager</code> option</h2>
+<p>With a <a href="phpcs/">PHP_CodeSniffer</a> PHAR distribution, we will see how to use your CLI tools installed by PHIVE.</p>
 
 
 
