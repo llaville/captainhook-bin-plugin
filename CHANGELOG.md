@@ -50,6 +50,7 @@ For example:
     ]
 }
 ```
+
 - a generic syntax to add configuration file to all your CLI tools : `\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.config-file`
 
 For example:
