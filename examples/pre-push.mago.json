@@ -7,8 +7,7 @@
                     "MAGO_LOG={$ENV|value-of:MAGO_LOG|default:debug}",
                     "{$ENV|value-of:XDG_BIN_HOME}mago",
                     "{$ENV|value-of:\\Bartlett\\CaptainHookBinPlugin\\BinPlugin.colors-flag|cache:false}",
-                    "lint",
-                    "--baseline .github/linters/lint-baseline.toml"
+                    "lint"
                 ],
                 "config": {
                     "label": "Static Analysis (with Mago)"
